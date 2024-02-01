@@ -5,7 +5,7 @@ const ProductManager=require('../productsManager')
 
 router.get('/products',(req, res)=>{
     const fs=require('fs')
-    let resultado = JSON.parse(fs.readFileSync('juegos.json', 'utf-8'));
+    let resultado = JSON.parse(fs.readFileSync('products.json', 'utf-8'));
      
    
     if(req.query.limit){
@@ -34,7 +34,7 @@ router.get('/products/:pid',(req,res)=>{
     };
 })
 
-router.post('/products', (req, res) => {
+router.put('/products', (req, res) => {
     const { title, description, code, price, stock, category, /* estado,  */thumbnail } = req.body;
     
 
@@ -44,7 +44,7 @@ router.post('/products', (req, res) => {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     } 
   
-    const manager = new ProductManager('juegos.json');
+    const manager = new ProductManager('products.json');
     const addProduct =  manager.addProduct(title, description, price, thumbnail, code, stock, category/* , estado */);  
 
     if (addProduct) {
@@ -59,7 +59,7 @@ router.post('/products', (req, res) => {
 
 })
 
-router.post('/products/:pid', (req, res) => {
+router.put('/products/:pid', (req, res) => {
     let id = req.params.pid;
     id = parseInt(id);
 
@@ -73,7 +73,7 @@ router.post('/products/:pid', (req, res) => {
         return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
-    const manager = new ProductManager('juegos.json');
+    const manager = new ProductManager('products.json');
     const updatedProducts = manager.updateProduct(id, {
         title,
         description,
@@ -92,7 +92,7 @@ router.post('/products/:pid', (req, res) => {
     }
 });
 
-router.delete('/:pid', (req, res) => {
+router.delete('/products/:pid', (req, res) => {
     let id = req.params.pid;
     id = parseInt(id);
 
@@ -102,7 +102,7 @@ router.delete('/:pid', (req, res) => {
  
     
    
-    const manager = new ProductManager('juegos.json');
+    const manager = new ProductManager('products.json');
     const deleteProduct = manager.deleteProducto(id)
     
     if (deleteProduct) {

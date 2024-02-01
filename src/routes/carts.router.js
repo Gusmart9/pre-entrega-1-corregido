@@ -6,7 +6,7 @@ const CartsManager=require('../cartsManager')
 const cartManager = new CartsManager('carts.json');
   
 
-router.post('/', (req, res) => {
+router.put('/', (req, res) => {
   const newCart = cartManager.createCart();
   res.status(201).json(newCart);
 });
@@ -32,7 +32,7 @@ router.get('/:cid', (req, res) => {
 })
 
 
-router.post('/:cid/product/:pid', (req, res) => {
+router.put('/:cid/product/:pid', (req, res) => {
   let productId = req.params.pid;
   let id=req.params.cid
   id=parseInt(id)  
